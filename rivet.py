@@ -229,7 +229,7 @@ def compute_file(input_name, output_name=None, homology=0, x=0, y=0):
         output_name = _rivet_name(input_name, homology, x, y)
     cmd = "%s %s %s -H %d -x %d -y %d -f msgpack" % \
           (rivet_executable, input_name, output_name, homology, x, y)
-    subprocess.check_output(shlex.split(cmd))
+    subprocess.check_output(shlex.split(cmd),shell=True)
     return output_name
 
 
@@ -237,7 +237,7 @@ def barcodes_file(input_name, slice_name):
     cmd = "%s %s --barcodes %s" % (rivet_executable, input_name, slice_name)
     return _parse_slices(
         subprocess.check_output(
-            shlex.split(cmd)).split(b'\n'))
+            shlex.split(cmd)).split(b'\n'),shell=True)
 
 
 def betti(saveable, homology=0, x=0, y=0):
@@ -256,7 +256,7 @@ def betti_file(name, homology=0, x=0, y=0):
 
 def bounds_file(name):
     cmd = "%s %s --bounds" % (rivet_executable, name)
-    return parse_bounds(subprocess.check_output(shlex.split(cmd)).split(b'\n'))
+    return parse_bounds(subprocess.check_output(shlex.split(cmd)).split(b'\n'),shell=True)
 
 
 class TempDir(os.PathLike):
